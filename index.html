@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        #countdown {
+            font-size: 2em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Countdown</h1>
+    <label for="datetime">Zielzeit:</label>
+    <input type="datetime-local" id="datetime">
+    <button onclick="generateLink()">Link erstellen</button>
+    <p>
+        <a id="shareLink" href="#" target="_blank"></a>
+    </p>
+    <div id="countdown"></div>
+
+    <script>
+        function generateLink() {
+            const input = document.getElementById("datetime").value;
+            if (!input) return;
+            
+            const url = new URL(window.location.href);
+            url.searchParams.set("time", input);
+            document.getElementById("shareLink").href = url.toString();
+            document.getElementById("shareLink").innerText = url.toString();
+        }
+
+        function runCountdown(targetDate) {
+            const countdownElement = document.getElementById("countdown");
+            
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const difference = targetDate - now;
+                
+                if (difference <= 0) {
+                    countdownElement.innerHTML = "Zeit abgelaufen!";
+                    clearInterval(interval);
+                    return;
+                }
+                
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                
+                countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+            
+            updateCountdown();
+            const interval = setInterval(updateCountdown, 1000);
+        }
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const time = urlParams.get("time");
+            if (time) {
+                runCountdown(new Date(time).getTime());
+            }
+        };
+    </script>
+</body>
+</html>
