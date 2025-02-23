@@ -6,35 +6,84 @@
     <title>Countdown Timer</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             text-align: center;
             padding: 50px;
+            background: linear-gradient(135deg, #1DCAC7, #14B0DA, #E63946);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #container {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
         #countdown {
-            font-size: 2em;
+            font-size: 3em;
             margin-top: 20px;
+            font-weight: bold;
+            color: #E63946;
+        }
+        button {
+            background: #14B0DA;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 1.2em;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #1DCAC7;
+        }
+        input {
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1em;
+            text-align: center;
+            margin-top: 10px;
+        }
+        input::placeholder {
+            color: #ccc;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
-    <h1>Countdown</h1>
-    <label for="datetime">Zielzeit:</label>
-    <input type="datetime-local" id="datetime">
-    <button onclick="generateLink()">Link erstellen</button>
-    <p>
-        <a id="shareLink" href="#" target="_blank"></a>
-    </p>
-    <div id="countdown"></div>
+    <div id="container">
+        <h1>Countdown</h1>
+        <input type="datetime-local" id="datetime" placeholder="Datum eingeben">
+        <button onclick="shareLink()">Countdown teilen</button>
+        <div id="countdown"></div>
+    </div>
 
     <script>
-        function generateLink() {
+        function shareLink() {
             const input = document.getElementById("datetime").value;
             if (!input) return;
             
             const url = new URL(window.location.href);
             url.searchParams.set("time", input);
-            document.getElementById("shareLink").href = url.toString();
-            document.getElementById("shareLink").innerText = url.toString();
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Mein Countdown',
+                    text: 'Hier ist mein Countdown:',
+                    url: url.toString()
+                }).catch(err => console.log('Fehler beim Teilen:', err));
+            } else {
+                prompt("Kopiere diesen Link und teile ihn:", url.toString());
+            }
         }
 
         function runCountdown(targetDate) {
@@ -45,7 +94,7 @@
                 const difference = targetDate - now;
                 
                 if (difference <= 0) {
-                    countdownElement.innerHTML = "Zeit abgelaufen!";
+                    countdownElement.innerHTML = "🎉 Zeit abgelaufen! 🎉";
                     clearInterval(interval);
                     return;
                 }
