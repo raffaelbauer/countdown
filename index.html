@@ -165,11 +165,3 @@
             const time = urlParams.get("time");
             const title = urlParams.get("title");
             if (time) {
-                document.getElementById("inputSection").style.display = "none";
-                document.getElementById("countdownSection").style.display = "block";
-                runCountdown(new Date(time).getTime(), title);
-            }
-        };
-    </script>
-</body>
-</html>
