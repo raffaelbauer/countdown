@@ -30,7 +30,10 @@
             font-size: 3em;
             margin-top: 20px;
             font-weight: bold;
-            color: #E63946;
+            color: black;
+        }
+        #pageTitle {
+            color: black;
         }
         button {
             background: #14B0DA;
@@ -122,7 +125,7 @@
                 const difference = targetDate - now;
                 
                 if (difference <= 0) {
-                    countdownElement.innerHTML = "🎉 Zeit abgelaufen! 🎉";
+                    countdownElement.innerHTML = "Zeit abgelaufen!";
                     clearInterval(interval);
                     return;
                 }
