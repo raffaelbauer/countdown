@@ -76,7 +76,7 @@
 
         <div id="countdownSection" style="display: none;">
             <div id="countdown"></div>
-            <button onclick="createNewCountdown()">Selbst ein Countdown erstellen</button>
+            <button onclick="createNewCountdown()">Selbst einen Countdown erstellen</button>
         </div>
 
         <div id="inputSection">
@@ -145,6 +145,7 @@
         function createNewCountdown() {
             document.getElementById("inputSection").style.display = "block";
             document.getElementById("countdownSection").style.display = "none";
+            document.getElementById("pageTitle").innerHTML = "Countdown";
         }
 
         window.onload = function() {
