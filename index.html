@@ -9,7 +9,7 @@
             font-family: 'Arial', sans-serif;
             text-align: center;
             padding: 50px;
-            background: linear-gradient(135deg, #1DCAC7, #14B0DA, #E63946);
+            background: linear-gradient(135deg, #1DCAC7, #14B0DA, #E63946, #FDC830, #FC4A1A);
             color: white;
             display: flex;
             flex-direction: column;
@@ -59,22 +59,6 @@
             color: #ccc;
             font-style: italic;
         }
-        #titleInput {
-            margin-top: 20px;
-        }
-        .footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #222;
-            color: white;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-        }
-        .footer a {
-            color: #14B0DA;
-            text-decoration: none;
-        }
         #inputSection {
             z-index: 2;
         }
@@ -100,10 +84,11 @@
         </div>
     </div>
 
-    <footer class="footer">
-        &copy; 2025 Raffael Bauer<br>
-        <a href="https://raffaelbauer.github.io/Impressum/">Impressum</a> | 
-        <a href="https://raffaelbauer.github.io/Datenschutzbestimmungen/">Datenschutzbestimmungen</a>
+    <footer>
+        <p>&copy; 2025 Raffael Bauer. Alle Rechte vorbehalten.</p>
+        <p>
+            <a href="https://raffaelbauer.github.io/Datenschutzerklaerung/">Datenschutzbestimmungen</a>
+        </p>
     </footer>
 
     <script>
@@ -155,7 +140,6 @@
         }
 
         function createNewCountdown() {
-            // Zeige das Eingabefeld und verstecke den Countdown
             document.getElementById("inputSection").style.display = "block";
             document.getElementById("countdownSection").style.display = "none";
         }
@@ -165,3 +149,11 @@
             const time = urlParams.get("time");
             const title = urlParams.get("title");
             if (time) {
+                document.getElementById("inputSection").style.display = "none";
+                document.getElementById("countdownSection").style.display = "block";
+                runCountdown(new Date(time).getTime(), title);
+            }
+        };
+    </script>
+</body>
+</html>
